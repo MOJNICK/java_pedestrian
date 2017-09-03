@@ -8,6 +8,9 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.core.Rect;
 import org.opencv.objdetect.HOGDescriptor;
 import org.opencv.core.MatOfDouble;
+import org.opencv.core.MatOfRect;
+import org.opencv.core.Size;
+
 
 class mainClass {
 
@@ -28,14 +31,20 @@ class mainClass {
     return 0;
   }
   
-  public Vector<Rect> detectPeoples(Mat frame) {
-	  Vector<Rect> peoples = new Vector<Rect>();
-	  MatOffoundWeights 
+  public MatOfRect detectPeoples(Mat frame) {
+//	  Vector<Rect> peoples = new Vector<Rect>();
+	  MatOfRect foundPeoples = new MatOfRect();
+	  MatOfDouble foundWeights = new MatOfDouble();
+	  double hitThreshold = 1.0;
+	  Size winStride = new Size(4,4);
+	  Size padding = new Size(8,8);
+	  double finalThreshold = 1.0;
+	  boolean useMeanshiftGrouping = false;
 //	  return HogDescriptor("/home/szozda/git/opencv/data/hogcascades/hogcascade_pedestrians.xml");
 	  HOGDescriptor hog = new HOGDescriptor();
 	  hog.setSVMDetector(HOGDescriptor.getDefaultPeopleDetector());
-	  hog.detectMultiScale(frame, peoples, foundWeights, hitThreshold, winStride = (4,4), padding=(8,8), 1.05, finalThreshold, useMeanshiftGrouping);
-	  return peoples;
+	  hog.detectMultiScale(frame, foundPeoples, foundWeights, hitThreshold, winStride, padding, 1.05, finalThreshold, useMeanshiftGrouping);
+	  return foundPeoples;
   }
   
   public static NonMaxima(Array boxes) {
